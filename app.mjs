@@ -1,11 +1,26 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import connectionPool from "./utils/db.mjs";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // Frontend local (Vite)
+      "http://localhost:4000", // Frontend local (React แบบอื่น)
+      "https://my-profile-eight-flax.vercel.app", // Frontend ที่ Deploy แล้ว
+    ],
+  })
+);
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ message: "OK" });
+});
 
 app.post("/assignments", async (req, res) => {
   const { title, image, category_id, description, content, status_id } =
