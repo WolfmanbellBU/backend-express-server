@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import connectionPool from "./utils/db.mjs";
+import { validatePostBody } from "./utils/postValidation.mjs";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -22,23 +23,9 @@ app.get("/health", (req, res) => {
   res.status(200).json({ message: "OK" });
 });
 
-app.post("/assignments", async (req, res) => {
+app.post("/assignments", validatePostBody, async (req, res) => {
   const { title, image, category_id, description, content, status_id } =
     req.body;
-
-  if (
-    !title ||
-    !image ||
-    !category_id ||
-    !description ||
-    !content ||
-    !status_id
-  ) {
-    return res.status(400).json({
-      message:
-        "Server could not create post because there are missing data from client",
-    });
-  }
 
   try {
     await connectionPool.query(
@@ -170,7 +157,7 @@ app.get("/posts/:postId", async (req, res) => {
   }
 });
 
-app.put("/posts/:postId", async (req, res) => {
+app.put("/posts/:postId", validatePostBody, async (req, res) => {
   const postId = req.params.postId;
   const { title, image, category_id, description, content, status_id } =
     req.body;
