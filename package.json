@@ -8,6 +8,7 @@
     "dev": "node app.mjs"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.112.2",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^4.21.2",
