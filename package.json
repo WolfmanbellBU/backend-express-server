@@ -5,7 +5,8 @@
   "main": "app.mjs",
   "scripts": {
     "start": "node app.mjs",
-    "dev": "node app.mjs"
+    "dev": "node app.mjs",
+    "test": "node --test tests/posts.validation.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.2",

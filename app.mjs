@@ -1,5 +1,7 @@
 // app.mjs
 import "dotenv/config";
+import path from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
 import postRoutes from "./apps/postRoutes.mjs";
@@ -38,7 +40,14 @@ app.get("/admin-only", protectAdmin, (req, res) => {
   res.json({ message: "This is admin-only content", admin: req.user });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+export default app;
+
+const isDirectRun =
+  process.argv[1] &&
+  fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
+
+if (isDirectRun) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}

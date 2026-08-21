@@ -1,6 +1,6 @@
 import { Router } from "express";
 import connectionPool from "../utils/db.mjs";
-import { validatePostBody } from "../utils/postValidation.mjs";
+import { validateUpdatePost } from "../utils/postValidation.mjs";
 
 const postsRouter = Router();
 
@@ -109,7 +109,7 @@ postsRouter.get("/:postId", async (req, res) => {
   }
 });
 
-postsRouter.put("/:postId", validatePostBody, async (req, res) => {
+postsRouter.put("/:postId", validateUpdatePost, async (req, res) => {
   const postId = req.params.postId;
   const { title, image, category_id, description, content, status_id } =
     req.body;
