@@ -1,7 +1,7 @@
 import * as pg from "pg";
 import dns from "dns";
 
-// บังคับ resolve IPv4 ก่อน (ช่วยกรณีเครือข่ายไม่รองรับ IPv6 ของ Supabase)
+// Direct db.*.supabase.co เป็น IPv6-only — เครื่องที่ไม่มี IPv6 ต้องใช้ pooler (IPv4)
 dns.setDefaultResultOrder("ipv4first");
 
 const { Pool } = pg;
