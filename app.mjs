@@ -46,7 +46,8 @@ const isDirectRun =
   process.argv[1] &&
   fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
 
-if (isDirectRun) {
+// Vercel ตั้ง VERCEL=1 — ห้าม listen() ใน serverless ไม่งั้นทุก route จะ FUNCTION_INVOCATION_FAILED
+if (isDirectRun && !process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
